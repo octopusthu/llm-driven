@@ -34,7 +34,7 @@ Append one entry to `log.md` per operation. Start it with a heading:
 
     ## [2026-01-15T09:30+01:00] ingest | Title of the source
 
-- The bracket holds the recorded time: when the operation ran, in ISO 8601 with offset. Take it from the system clock, for example `date +%Y-%m-%dT%H:%M%z`. Never estimate it.
+- The bracket holds the recorded time: when the operation ran, in ISO 8601 with a colon in the offset. Take it from the system clock with `date -Iminutes`. Never estimate it.
 - The operation is one of `setup`, `ingest`, `query`, `lint`.
 
 ## Set up a vault

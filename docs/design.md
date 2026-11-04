@@ -21,7 +21,7 @@ Taken from LLM Wiki without extension:
 - Two navigation files: an index organized by content, and an append-only log organized by time.
 - Any domain where knowledge accumulates over time.
 
-## The one addition: two times
+## Addition 1: two times
 
 The original log has one time axis: when an operation ran. Once old material is back-filled, that axis cannot tell "when the vault learned something" from "when it happened". The skill adds these requirements:
 
@@ -67,7 +67,18 @@ Two tests help decide:
 - Blast radius: if a typical new source would touch pages on both sides, do not split.
 - Contradiction: if claims on the two sides could contradict each other, they belong in one vault. Otherwise lint cannot see the contradiction.
 
-When two vaults must relate, the flow is one way. The downstream vault ingests the upstream vault's published pages as sources.
+When two vaults must relate, use a pointer, or ingest one way: the downstream vault ingests the upstream vault's published pages as sources.
+
+## Addition 2: pointers
+
+Not all of a person's or a team's knowledge can live in one vault. Some of it already has a better home: another vault, a team wiki, a document store. A vault may point to such a place instead of copying it.
+
+1. A pointer records where the knowledge is and what it holds. It copies no content.
+2. Pointers are listed in the index, so a query finds them the same way it finds pages.
+3. When a question needs the target, the agent follows the pointer and cites the target. The vault does not maintain the target.
+4. A pointer is visible to the pointing vault's readers. It must not reveal more than they may see.
+
+A vault whose index is mostly pointers is an entry point to other places. It needs no special type.
 
 ## Boundaries
 
@@ -90,5 +101,4 @@ Examples in the skill use invented content only.
 ## Open questions
 
 1. After a back-fill, how does the wiki catch up: update only the affected pages, or must the whole wiki be rebuildable from sources?
-2. Beyond one-way ingest, may vaults link to each other directly?
-3. What compatibility does the skill promise existing vaults when it changes?
+2. What compatibility does the skill promise existing vaults when it changes?

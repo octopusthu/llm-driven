@@ -1,0 +1,94 @@
+# Design: goals and boundaries
+
+Status: draft.
+
+This document constrains what the skill may contain. If `SKILL.md` and this document disagree, this document wins until it is amended.
+
+Based on Andrej Karpathy, [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f).
+
+## Goal
+
+Package the LLM Wiki pattern as one agent skill that works in any vault. The agent compiles sources into a persistent, interlinked markdown wiki and keeps it current. Knowledge is compiled once and then maintained, not re-derived from raw sources on every question.
+
+The division of labor is the original one. The human curates sources, asks questions, and judges what matters. The agent does the summarizing, cross-referencing, filing, and bookkeeping.
+
+## Scope
+
+Taken from LLM Wiki without extension:
+
+- Three layers: raw sources (immutable), the wiki (written and maintained by the agent), and the schema (per-vault conventions, co-evolved by the human and the agent).
+- Three operations: ingest, query (answers cite wiki pages, and good answers are filed back as pages), and lint.
+- Two navigation files: an index organized by content, and an append-only log organized by time.
+- Any domain where knowledge accumulates over time.
+
+## The one addition: two times
+
+The original log has one time axis: when an operation ran. Once old material is back-filled, that axis cannot tell "when the vault learned something" from "when it happened". The skill adds these requirements:
+
+1. Sources are immutable. A correction is a new source that names the source it corrects. The corrected source stays.
+2. Back-filling is allowed at any time.
+3. Every ingest records two independent times:
+   - Recorded time: when this ingest ran.
+   - Event time: when the content actually happened. It may be an instant, a range, or partial (a month, a year). If it is unknown, record it as unknown. Never substitute the recorded time.
+4. "Newer" means a later event time, not a later ingest. A back-filled source about an earlier event must not override a claim about a later one.
+5. Two kinds of question must be answerable: what was the case at event time T, and what did the vault know as of recorded time T.
+
+This is bitemporal modeling: actual time and record time in Martin Fowler's terms, valid time and transaction time in SQL:2011. See [Bitemporal History](https://martinfowler.com/articles/bitemporal-history.html).
+
+## Vault
+
+The term comes from Obsidian. The original only says the wiki is "a git repo of markdown files".
+
+A vault is one instance of the pattern: one set of raw sources, one wiki, one schema, one index, and one log, stored in one git repository.
+
+A vault is four boundaries at once:
+
+| Boundary | Meaning |
+|---|---|
+| Links | Links resolve, and are maintained, only inside the vault. |
+| Consistency | Lint can detect contradictions, orphans, and missing links only inside the vault. |
+| Conventions | One schema applies, so each term has one meaning. |
+| Access | One audience and one storage and sync policy apply. |
+
+In domain-driven design terms, a vault is a bounded context.
+
+### When to split
+
+Every split turns links the agent maintains into links no one maintains. Split only on a hard constraint, checked in this order:
+
+1. Visibility differs: some pages must not be seen by the other side's readers.
+2. Ownership or lifecycle differs: the parts will be handed over, archived, or taken away separately.
+3. A term means different things on each side, and namespacing inside one vault cannot resolve it.
+
+Otherwise, use one vault and separate topics with directories or tags. Size is not a reason to split. When the index stops being enough, add search.
+
+Two tests help decide:
+
+- Blast radius: if a typical new source would touch pages on both sides, do not split.
+- Contradiction: if claims on the two sides could contradict each other, they belong in one vault. Otherwise lint cannot see the contradiction.
+
+When two vaults must relate, the flow is one way. The downstream vault ingests the upstream vault's published pages as sources.
+
+## Boundaries
+
+| In | Out |
+|---|---|
+| One skill containing generic rules only | No domain, project, person, organization, or real-vault content |
+| Published publicly; vaults use it read-only | Vaults never write back to the skill |
+| One git repository per vault | The skill does not decide how many vaults exist; it only provides the rules above |
+| Knowledge compiled at write time | Not RAG; no vector store is required. Search tooling is optional at scale |
+| Goals, reviews, and decisions recorded as knowledge | Not a task manager or a calendar |
+| Page formats and directory layout set by each vault's schema | The skill fixes only the invariants in this document |
+| The open Agent Skills format | No agent-product-specific fields or tools; no required viewer |
+
+## Genericity test
+
+Before a sentence goes into the skill, replace its domain nouns with nouns from another domain. If the sentence stops being true, it belongs in a vault's schema, not in the skill.
+
+Examples in the skill use invented content only.
+
+## Open questions
+
+1. After a back-fill, how does the wiki catch up: update only the affected pages, or must the whole wiki be rebuildable from sources?
+2. Beyond one-way ingest, may vaults link to each other directly?
+3. What compatibility does the skill promise existing vaults when it changes?

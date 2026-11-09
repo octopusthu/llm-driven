@@ -2,7 +2,7 @@
 
 An agent skill for Andrej Karpathy's [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern. The agent compiles your sources into a persistent, interlinked markdown wiki and keeps it current.
 
-**Status:** early. `SKILL.md` covers setting up a vault; ingest, query, lint, and divide are outlined only. See [docs/design.md](docs/design.md) for goals and boundaries.
+**Status:** early. `SKILL.md` covers setting up a vault and revising the skill; ingest, query, lint, and divide are outlined only. See [docs/design.md](docs/design.md) for goals and boundaries.
 
 ## What this adds to the original
 
@@ -17,9 +17,10 @@ The repository root is the skill root, in the open [Agent Skills](https://agents
 ```
 llm-driven/
 ├── SKILL.md
+├── AGENTS.md            # how to maintain this repository
 ├── README.md
 ├── assets/
-│   └── vault-template/   # SCHEMA.md, index.md, log.md for a new vault
+│   └── vault-template/  # AGENTS.md, index.md, log.md for a new vault
 └── docs/
     └── design.md
 ```

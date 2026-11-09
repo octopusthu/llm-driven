@@ -1,5 +1,7 @@
 # Schema
 
+This file is the vault's schema. It is named `AGENTS.md` so that agents working in this repository read it automatically.
+
 Conventions for this vault. The agent reads this file before every operation. The human and the agent revise it together.
 
 ## Purpose

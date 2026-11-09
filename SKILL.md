@@ -18,15 +18,17 @@ The human curates sources, asks questions, and judges what matters. The agent wr
 - **Query** the wiki: answer with citations to wiki pages, and file good answers back as pages. Follow pointers in the index when the answer lives elsewhere.
 - **Lint** the wiki: report contradictions, stale claims, orphan pages, missing pages, and missing links.
 - **Divide** knowledge: decide whether material belongs in an existing vault or a new one.
+- **Revise** this skill: report where it does not fit, and propose a change.
 
-Only Set up has detailed instructions so far.
+Only Set up and Revise have detailed instructions so far.
 
 ## Vault layout
 
-- `SCHEMA.md`, `index.md`, `log.md` at the vault root. These names are fixed.
+- `AGENTS.md` holds the vault's schema. `index.md` and `log.md` sit beside it. These three names are fixed.
 - `raw/` for sources and `wiki/` for pages, by default. A vault's schema may choose other locations.
+- Because the schema is named `AGENTS.md`, most agents read it as soon as they work in the repository, so the vault's conventions load even when this skill is not active.
 
-Read `SCHEMA.md` before every operation.
+Read `AGENTS.md` before every operation.
 
 ## Log entries
 
@@ -35,13 +37,24 @@ Append one entry to `log.md` per operation. Start it with a heading:
     ## [2026-01-15T09:30+01:00] ingest | Title of the source
 
 - The bracket holds the recorded time: when the operation ran, in ISO 8601 with a colon in the offset. Take it from the system clock with `date -Iminutes`. Never estimate it.
-- The operation is one of `setup`, `ingest`, `query`, `lint`.
+- The operation is one of `setup`, `ingest`, `query`, `lint`, `revise`.
 
 ## Set up a vault
 
 1. Confirm the target directory. If it already holds content, stop: adopting an existing repository is not covered yet.
 2. Create the directory and run `git init`.
 3. Copy the files in `assets/vault-template/` to the vault root. Do not create `raw/` or `wiki/`; the first ingest creates them.
-4. Fill in `SCHEMA.md` with the user. Ask only for what is not already known. Write "Not decided." for anything the user has not decided; never invent it. Keep the template's headings and write the content in the vault's language.
+4. Fill in `AGENTS.md` with the user. Ask only for what is not already known. Write "Not decided." for anything the user has not decided; never invent it. Keep the template's headings and write the content in the vault's language.
 5. Append a `setup` entry to `log.md`. Under it, record the skill version as the commit of this skill's repository (`git -C <skill root> rev-parse --short HEAD`), if it is a git repository.
-6. Commit. Do not add a remote or push unless `SCHEMA.md` allows it.
+6. Commit. Do not add a remote or push unless `AGENTS.md` allows it.
+
+## Revise this skill
+
+This skill is expected to keep changing; it was written before any real use. Watch for three failures during any operation: a decision it does not make, a rule that blocks useful work, and advice that is simply wrong.
+
+1. Never invent procedure. When an operation needs a decision this skill does not make, or a rule must be broken to be useful, say so instead of improvising. Name the case: vault, commit, page.
+2. Choose the layer before proposing the change. If the fix would hold in any domain, it belongs in this skill. If it only holds here, it belongs in that vault's schema. Apply the genericity test in `docs/design.md`.
+3. Propose, do not impose. Give the case, what the skill says now, the change, and the strongest argument for leaving it alone. Do not edit this skill until the human agrees.
+4. Challenge the request as well as the rule. If an instruction conflicts with `docs/design.md`, say so before complying.
+5. Add a rule only when a case needed it. Remove one only for a hard constraint, the same bar as splitting a vault. Without this the skill erodes toward whatever was convenient last week.
+6. Record the version when a vault is set up or revised, so vaults older than a change can be found and re-checked.

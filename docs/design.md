@@ -41,6 +41,8 @@ The term comes from Obsidian. The original only says the wiki is "a git repo of 
 
 A vault is one instance of the pattern: one set of raw sources, one wiki, one schema, one index, and one log, stored in one git repository.
 
+The schema is `AGENTS.md` at the vault root. The original named it "e.g. CLAUDE.md for Claude Code or AGENTS.md for Codex"; since then AGENTS.md has become the cross-vendor form, read by most agents without being told to. Naming the schema that way means a vault's conventions load even when this skill is not active.
+
 A vault is four boundaries at once:
 
 | Boundary | Meaning |
@@ -80,6 +82,23 @@ Not all of a person's or a team's knowledge can live in one vault. Some of it al
 
 A vault whose index is mostly pointers is an entry point to other places. It needs no special type.
 
+## Addition 3: revision
+
+The original has one evolution loop: the schema, which the human and the agent co-evolve. That loop improves a single vault. It leaves the pattern itself untouched, and the pattern is what will be wrong most often, because it is written before any real use.
+
+This skill adds a second loop, on itself. In use it fails in three ways:
+
+1. It does not decide something the work needs, so the agent improvises. The improvisation is invisible and dies with the session.
+2. A rule blocks useful work, so the agent quietly breaks it, and the rule stops meaning anything.
+3. It gives advice that is wrong for the case at hand.
+
+The operating rules are in `SKILL.md` under Revise. Two properties matter:
+
+- **The layer is chosen before the change.** A friction that would recur in any domain belongs in the skill; one that only holds in this vault belongs in its schema. This reuses the genericity test instead of adding a mechanism.
+- **The skill ratchets.** Rules are added when a case needed them, and removed only for a hard constraint. Without this, the skill erodes toward whatever was convenient last week.
+
+A proposal without a case is an opinion. Record it in the log, not in the skill.
+
 ## Boundaries
 
 | In | Out |
@@ -91,6 +110,7 @@ A vault whose index is mostly pointers is an entry point to other places. It nee
 | Goals, reviews, and decisions recorded as knowledge | Not a task manager or a calendar |
 | Page formats and directory layout set by each vault's schema | The skill fixes only the invariants in this document |
 | The open Agent Skills format | No agent-product-specific fields or tools; no required viewer |
+| Revises itself on evidence, gated by the human | Not autonomous self-modification; no rule changes without a case and an agreement |
 
 ## Genericity test
 

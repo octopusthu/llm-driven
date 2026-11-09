@@ -32,28 +32,22 @@ Read `AGENTS.md` before every operation.
 
 ## Log entries
 
-Append one entry to `log.md` per operation. Start it with a heading:
+Append one entry to `log.md` per operation. One entry is one line:
 
-    ## [2026-01-15T09:30+01:00] ingest | Title of the source
+    ## [2026-11-09T18:20+08:00] ingest | Title of the source | llm-driven@1fb4987 | agent | owner | model | effort | ctx
 
 - The bracket holds the recorded time: when the operation ran, in ISO 8601 with a colon in the offset. Take it from the system clock with `date -Iminutes`. Never estimate it.
 - The operation is one of `setup`, `ingest`, `query`, `lint`, `revise`.
+- The title comes next, then six fields in a fixed order: skill and commit, agent and version, account, model, reasoning effort, context. Fixed positions mean the line needs no keys and stays parseable: `awk -F' \\| '`.
 
-Under the heading, record the compiler, as a block:
-
-    - Compiler: <agent and version> · skill <commit>
-    - Account: <owner, or the role label the schema allows>
-    - Model: <as the runtime reports it>
-    - Reasoning: <as the runtime names it>
-    - Context: <window> window, <used> used
-
-Required on `ingest`, `revise`, and on `query` when it files a page. Which agent, under which account, on which model, at what effort, with how much context: these decide whether a page can be trusted, and they are what makes a failure reproducible.
+Record the fields on `ingest`, `revise`, and on `query` when it files a page. Which agent, under which account, on which model, at what effort, with how much context decides whether a page can be trusted, and makes a failure reproducible.
 
 1. Read the values from the runtime, not from the model's description of itself. A model's account of its own identity is not evidence.
-2. Runtimes expose different amounts of this. Record what you have, and `unknown` for the rest. Never infer a value and never drop the line.
-3. The account can identify a person. Record it only if the vault's schema allows it for that vault's storage; otherwise record the role, for example `owner`.
-4. Never record credentials, tokens, or anything that grants access.
-5. Entries written before this rule carry no block. Do not add one retroactively.
+2. Runtimes expose different amounts of this. Write what you have and `unknown` for the rest. Never infer a value, and never drop a position.
+3. Keep the line short. Write context as `200k/38k` for window and used, and cut long values to what identifies them.
+4. A title or value may not contain `|`. Replace it.
+5. The account can identify a person. Record it only if the vault's schema allows it for that vault's storage; otherwise record the role, for example `owner`. Never record credentials, tokens, or anything that grants access.
+6. Entries written before this rule carry no fields. Do not add them retroactively.
 
 ## Set up a vault
 
@@ -61,7 +55,7 @@ Required on `ingest`, `revise`, and on `query` when it files a page. Which agent
 2. Create the directory and run `git init`.
 3. Copy the files in `assets/vault-template/` to the vault root. Do not create `raw/` or `wiki/`; the first ingest creates them.
 4. Fill in `AGENTS.md` with the user. Ask only for what is not already known. Write "Not decided." for anything the user has not decided; never invent it. Keep the template's headings and write the content in the vault's language.
-5. Append a `setup` entry to `log.md`, with the compiler block. The block's `Compiler` line carries the skill version: the commit of this skill's repository.
+5. Append a `setup` entry to `log.md`, with the fields. The first field carries the skill version: the commit of this skill's repository.
 6. Commit. Do not add a remote or push unless `AGENTS.md` allows it.
 
 ## Revise this skill

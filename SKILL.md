@@ -39,13 +39,29 @@ Append one entry to `log.md` per operation. Start it with a heading:
 - The bracket holds the recorded time: when the operation ran, in ISO 8601 with a colon in the offset. Take it from the system clock with `date -Iminutes`. Never estimate it.
 - The operation is one of `setup`, `ingest`, `query`, `lint`, `revise`.
 
+Under the heading, record the compiler, as a block:
+
+    - Compiler: <agent and version> · skill <commit>
+    - Account: <owner, or the role label the schema allows>
+    - Model: <as the runtime reports it>
+    - Reasoning: <as the runtime names it>
+    - Context: <window> window, <used> used
+
+Required on `ingest`, `revise`, and on `query` when it files a page. Which agent, under which account, on which model, at what effort, with how much context: these decide whether a page can be trusted, and they are what makes a failure reproducible.
+
+1. Read the values from the runtime, not from the model's description of itself. A model's account of its own identity is not evidence.
+2. Runtimes expose different amounts of this. Record what you have, and `unknown` for the rest. Never infer a value and never drop the line.
+3. The account can identify a person. Record it only if the vault's schema allows it for that vault's storage; otherwise record the role, for example `owner`.
+4. Never record credentials, tokens, or anything that grants access.
+5. Entries written before this rule carry no block. Do not add one retroactively.
+
 ## Set up a vault
 
 1. Confirm the target directory. If it already holds content, stop: adopting an existing repository is not covered yet.
 2. Create the directory and run `git init`.
 3. Copy the files in `assets/vault-template/` to the vault root. Do not create `raw/` or `wiki/`; the first ingest creates them.
 4. Fill in `AGENTS.md` with the user. Ask only for what is not already known. Write "Not decided." for anything the user has not decided; never invent it. Keep the template's headings and write the content in the vault's language.
-5. Append a `setup` entry to `log.md`. Under it, record the skill version as the commit of this skill's repository (`git -C <skill root> rev-parse --short HEAD`), if it is a git repository.
+5. Append a `setup` entry to `log.md`, with the compiler block. The block's `Compiler` line carries the skill version: the commit of this skill's repository.
 6. Commit. Do not add a remote or push unless `AGENTS.md` allows it.
 
 ## Revise this skill
@@ -57,4 +73,4 @@ This skill is expected to keep changing; it was written before any real use. Wat
 3. Propose, do not impose. Give the case, what the skill says now, the change, and the strongest argument for leaving it alone. Do not edit this skill until the human agrees.
 4. Challenge the request as well as the rule. If an instruction conflicts with `docs/design.md`, say so before complying.
 5. Add a rule only when a case needed it. Remove one only for a hard constraint, the same bar as splitting a vault. Without this the skill erodes toward whatever was convenient last week.
-6. Record the version when a vault is set up or revised, so vaults older than a change can be found and re-checked.
+6. Keep the skill version in the compiler line of every entry, so vaults older than a change can be found and re-checked.

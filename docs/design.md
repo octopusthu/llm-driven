@@ -21,7 +21,11 @@ Taken from LLM Wiki without extension:
 - Two navigation files: an index organized by content, and an append-only log organized by time.
 - Any domain where knowledge accumulates over time.
 
-## Addition 1: two times
+## Addition 1: provenance on every ingest
+
+Provenance has two parts. One is time; the other is the compiler.
+
+### Two times
 
 The original log has one time axis: when an operation ran. Once old material is back-filled, that axis cannot tell "when the vault learned something" from "when it happened". The skill adds these requirements:
 
@@ -34,6 +38,15 @@ The original log has one time axis: when an operation ran. Once old material is 
 5. Two kinds of question must be answerable: what was the case at event time T, and what did the vault know as of recorded time T.
 
 This is bitemporal modeling: actual time and record time in Martin Fowler's terms, valid time and transaction time in SQL:2011. See [Bitemporal History](https://martinfowler.com/articles/bitemporal-history.html).
+
+### The compiler
+
+Every entry also records which agent, under which account, on which model, at what effort, with how much context wrote it. The original assumes one agent and one model; once a vault outlives a model version, or more than one agent writes into it, a page without this record cannot be judged or reproduced.
+
+Two constraints follow from the same discipline as event time:
+
+- **The runtime is the only source.** Model self-identification is unreliable, so a value the runtime does not report stays `unknown`. Guessing is worse than a gap, because a gap is visible.
+- **The account is personal data.** It is recorded only where the vault's storage allows it. Otherwise the role is recorded instead.
 
 ## Vault
 

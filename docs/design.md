@@ -131,7 +131,9 @@ Feedback is a concept. Its form belongs to the environment, and a skill meant fo
 
 The substance is four things: the case, what the skill says now, the proposed change, and the strongest argument against it. Without a case the report is an opinion, and opinions are cheap enough to ignore.
 
-Suggested forms, best first: an issue on this repository, a pull request that makes the change and argues for it, a note to the maintainer, and — with no channel at all — a local record in the vault, collected later by `scripts/revisions.py`.
+Suggested forms, best first: an issue on this repository, a pull request that makes the change and argues for it, a note to the maintainer, and — with no channel at all — `feedback.md` in the vault, collected later by `scripts/feedback.py`.
+
+The name matters. `revise` already means changing the vault itself, which is what `log.md` records; feedback travels the other way, from the vault to this skill. Two directions need two words, or every reader assumes the wrong one.
 
 Only a friction that would change the skill travels. One that holds for a single vault is an override in that vault's schema. Without that valve the upstream loop drowns in local detail.
 

@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
-"""Collect open frictions from every vault under the given roots.
+"""Collect open feedback reports from every vault under the given roots.
 
-A vault is a git repository holding AGENTS.md, index.md and log.md. Frictions live in
-its revisions.md, one block per record. A record is closed by appending a line
-with the same id, so the last line for an id wins.
+A vault is a git repository holding AGENTS.md, index.md and log.md. Reports live in
+its feedback.md, one block each. A report is closed by appending a line with the
+same id, so the last line for an id wins.
 
 Usage:
-    revisions.py <root> [<root> ...]      print open records
-    revisions.py --all <root> [...]       print every record, with its status
+    feedback.py <root> [<root> ...]      print open reports
+    feedback.py --all <root> [...]       print every report, with its status
 """
 
 import re
 import sys
 from pathlib import Path
 
-HEADING = re.compile(r"^##\s+(R-\d+)\s*\|\s*([a-z-]+)\s*\|\s*(.*?)\s*$")
+HEADING = re.compile(r"^##\s+(F-\d+)\s*\|\s*([a-z-]+)\s*\|\s*(.*?)\s*$")
 CASE = re.compile(r"^\s*-\s*Case:\s*(.+?)\s*$")
 VAULT_FILES = ("AGENTS.md", "index.md", "log.md")
 
@@ -24,11 +24,11 @@ def is_vault(path):
     return all((path / name).is_file() for name in VAULT_FILES) and (path / ".git").exists()
 
 
-def read_records(revisions):
+def read_reports(feedback):
     """Return {id: (status, tail, case)} keeping the last state of each id."""
     records = {}
     current = None
-    for line in revisions.read_text(encoding="utf-8").splitlines():
+    for line in feedback.read_text(encoding="utf-8").splitlines():
         heading = HEADING.match(line)
         if heading:
             rid, status, tail = heading.groups()
@@ -66,10 +66,10 @@ def main(argv):
 
     total = 0
     for vault in found:
-        revisions = vault / "revisions.md"
-        if not revisions.is_file():
+        feedback = vault / "feedback.md"
+        if not feedback.is_file():
             continue
-        records = read_records(revisions)
+        records = read_reports(feedback)
         rows = [(rid, *v) for rid, v in records.items() if show_all or v[0] == "open"]
         if not rows:
             continue
@@ -80,7 +80,7 @@ def main(argv):
                 print(f"          case: {case}")
         total += len(rows)
 
-    print(f"\n{total} record(s) across {len(found)} vault(s)")
+    print(f"\n{total} report(s) across {len(found)} vault(s)")
     return 0
 
 

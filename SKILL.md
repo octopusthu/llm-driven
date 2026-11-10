@@ -41,7 +41,7 @@ Everything else is a default: directory names, the log field order, the sections
 
 ## Vault layout
 
-- `AGENTS.md` holds the schema; `index.md`, `log.md`, and `revisions.md` sit beside it. The first three names are fixed; `revisions.md` is where a report goes when there is no channel to the skill.
+- `AGENTS.md` holds the schema; `index.md`, `log.md`, and `feedback.md` sit beside it. The first three names are fixed; `feedback.md` is where a report to the skill goes when there is no channel to it.
 - `raw/` for sources and `wiki/` for pages, by default. A vault's schema may choose other locations.
 
 Read `AGENTS.md` before every operation.
@@ -53,7 +53,7 @@ Append one entry to `log.md` per operation. One entry is one line:
     ## [2026-11-09T18:20+08:00] ingest | Title of the source | llm-driven@1fb4987 | agent | owner | model | effort | ctx
 
 - The bracket holds the recorded time: when the operation ran, in ISO 8601 with a colon in the offset. Take it from the system clock with `date -Iminutes`. Never estimate it.
-- The operation is one of `setup`, `ingest`, `query`, `lint`, `revise`.
+- The operation is one of `setup`, `ingest`, `query`, `lint`, `revise`. `revise` changes this vault, such as an override or a schema edit; it is not how feedback travels.
 - The title comes next, then six fields in a fixed order: skill and commit, agent and version, account, model, reasoning effort, context. Fixed positions mean the line needs no keys and stays parseable: `awk -F' \\| '`. Required on `ingest`, `revise`, and on `query` when it files a page: they decide whether a page can be trusted, and they make a failure reproducible.
 
 1. Read the values from the runtime, not from the model's description of itself. A model's account of its own identity is not evidence.
@@ -79,6 +79,6 @@ Choose the layer first. A fix that would hold in any domain belongs here; one th
 
 Report it through whatever channel this repository offers. An issue is the natural one when it is reachable and the reporter has permission; a pull request works; so does telling the maintainer. Every report carries four things: the case named precisely (vault, commit, page), what the skill says now or the gap where it says nothing, the proposed change, and the strongest argument for leaving it alone. A report without a case is an opinion, and opinions stay in the conversation.
 
-With no channel, record it in `revisions.md` at the vault root and carry it later: one block per report, starting `## R-001 | open | <date> | skill: <the rule>`, then those four lines. `scripts/revisions.py <root>...` collects the open ones. Either way, close a report by appending a line that names the outcome; never rewrite the original, because the history of a disagreement is what explains the rule that came out of it. A change to this skill quotes the report's id.
+With no channel, keep the report in `feedback.md` at the vault root and carry it later: one block per report, starting `## F-001 | open | <date> | skill: <the rule>`, then those four lines. `scripts/feedback.py <root>...` collects the open ones. Either way, close a report by appending a line that names the outcome; never rewrite the original, because the history of a disagreement is what explains the rule that came out of it. A change to this skill quotes the report's id.
 
 Propose; do not impose. Do not edit this skill from a vault: vaults read it.

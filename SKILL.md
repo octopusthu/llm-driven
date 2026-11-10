@@ -41,7 +41,7 @@ Everything else is a default: directory names, the log field order, the sections
 
 ## Vault layout
 
-- `AGENTS.md` holds the schema; `index.md`, `log.md`, and `feedback.md` sit beside it. The first three names are fixed; `feedback.md` is where a report to the skill goes when there is no channel to it.
+- `AGENTS.md` holds the schema; `index.md` and `log.md` sit beside it. These three names are fixed; a vault needs no other file.
 - `raw/` for sources and `wiki/` for pages, by default. A vault's schema may choose other locations.
 
 Read `AGENTS.md` before every operation.
@@ -77,8 +77,8 @@ The skill was written before any real use, so expect it to be wrong. Watch for t
 
 Choose the layer first. A fix that would hold in any domain belongs here; one that holds for this vault alone belongs in its schema, and does not travel.
 
-Report it through whatever channel this repository offers. An issue is the natural one when it is reachable and the reporter has permission; a pull request works; so does telling the maintainer. Every report carries four things: the case named precisely (vault, commit, page), what the skill says now or the gap where it says nothing, the proposed change, and the strongest argument for leaving it alone. A report without a case is an opinion, and opinions stay in the conversation.
+Report it to whoever maintains this skill, through whatever channel this repository offers. An issue is the natural one when it is reachable and the reporter has permission; a pull request works; so does telling the maintainer. Every report carries four things: the case named precisely (vault, commit, page), what the skill says now or the gap where it says nothing, the proposed change, and the strongest argument for leaving it alone. A report without a case is an opinion, and opinions stay in the conversation.
 
-With no channel, keep the report in `feedback.md` at the vault root and carry it later: one block per report, starting `## F-001 | open | <date> | skill: <the rule>`, then those four lines. `scripts/feedback.py <root>...` collects the open ones. Either way, close a report by appending a line that names the outcome; never rewrite the original, because the history of a disagreement is what explains the rule that came out of it. A change to this skill quotes the report's id.
+Do not invent a file or a format for this. When the channel is unavailable, the report is knowledge the vault accumulated about something it depends on, so it goes where the rest of that knowledge goes: a page about the thing, in the wiki. No separate queue, no id scheme, no collector.
 
 Propose; do not impose. Do not edit this skill from a vault: vaults read it.

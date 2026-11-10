@@ -127,17 +127,15 @@ The failure this prevents is silence. A default that is quietly ignored is indis
 
 ### How a vault reports back
 
-Feedback is a concept. Its form belongs to the environment, and a skill meant for other people's repositories cannot assume one: this repository may have an issue tracker, or it may be a directory on someone's disk. So the design fixes the substance and only suggests the form.
+Feedback is a concept. Its form belongs to the environment, and a skill meant for other people's repositories cannot assume one: this repository may have an issue tracker, or it may be a directory on someone's disk.
 
 The substance is four things: the case, what the skill says now, the proposed change, and the strongest argument against it. Without a case the report is an opinion, and opinions are cheap enough to ignore.
 
-Suggested forms, best first: an issue on this repository, a pull request that makes the change and argues for it, a note to the maintainer, and — with no channel at all — `feedback.md` in the vault, collected later by `scripts/feedback.py`.
+Suggested forms, best first: an issue on this repository, a pull request that makes the change and argues for it, a note to the maintainer. With no channel, the report is knowledge the vault has accumulated about something it depends on, so it goes where that knowledge goes — a page about the thing, in the wiki. No separate queue, no id scheme, no collector.
 
-The name matters. `revise` already means changing the vault itself, which is what `log.md` records; feedback travels the other way, from the vault to this skill. Two directions need two words, or every reader assumes the wrong one.
+Two earlier versions gave feedback its own file in the vault, and then a script to collect those files. Both failed the same way: a mandated form needs a name, a name needs a target, and the target of a general-purpose file is never obvious. Removing the mandate removed the file and the script with it. What remains is the substance and the channel, which is less to get wrong.
 
 Only a friction that would change the skill travels. One that holds for a single vault is an override in that vault's schema. Without that valve the upstream loop drowns in local detail.
-
-Appending the outcome rather than rewriting the report survives every form, for the same reason the log is append-only: the history of a disagreement is what explains the rule that came out of it.
 
 Both mechanisms are deliberately thin. A standard form is only worth having if it costs less than the informality it replaces.
 

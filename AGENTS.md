@@ -33,7 +33,7 @@ uvx --from "git+https://github.com/agentskills/agentskills#subdirectory=skills-r
 ## Changing the skill
 
 - Add a rule only when a case needed it. Remove one only for a hard constraint, the same bar as splitting a vault. Without this the skill erodes toward whatever was convenient last week.
-- A change usually starts as a report from some vault, filed as an issue, a pull request, or a local `feedback.md`. Quote its id in the commit, and name the rule that changed.
-- Read the open reports before changing anything: the issue tracker if this repository has one, and `python3 scripts/feedback.py <root>...` for the local ones. A change that answers none of them needs a reason.
+- A change usually starts as a report from some vault, filed as an issue, a pull request, or a note. Quote its id in the commit, and name the rule that changed.
+- Read the open reports before changing anything. If that means hunting, say so: a hunt is a report about the channel, not a chore.
 - An invariant is the exception. Changing one changes what the pattern is: say so in the commit, and amend `docs/design.md` in the same commit.
 - Prefer deleting a rule to adding another. A skill that keeps growing stops being abstract.

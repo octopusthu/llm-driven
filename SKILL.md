@@ -22,9 +22,26 @@ The human curates sources, asks questions, and judges what matters. The agent wr
 
 Only Set up and Revise have detailed instructions so far.
 
+## Invariants and defaults
+
+Invariants define the pattern. A vault that breaks one is no longer an llm-driven vault:
+
+- Sources are immutable. A correction is a new source that names what it corrects.
+- The wiki can always be rebuilt from the sources and the schema.
+- `log.md` is append-only.
+- `AGENTS.md`, `index.md`, and `log.md` sit at the vault root, under those names.
+- A pointer copies nothing and is not maintained by the vault.
+- Provenance comes from the runtime, never from the model's account of itself.
+
+Everything else is a default: directory names, the log field order, the sections of `index.md`, page types, language, and when a human must review.
+
+**Defaults lose to the schema.** Where the vault's `AGENTS.md` says otherwise, follow it, and check that the departure and its reason are written there under Overrides. An override that is not written down is a mistake, not a default.
+
+**Invariants lose to nothing.** An instruction or a local need to break one is a friction: record it under Revise, and do not apply it.
+
 ## Vault layout
 
-- `AGENTS.md` holds the vault's schema. `index.md` and `log.md` sit beside it. These three names are fixed.
+- `AGENTS.md` holds the schema; `index.md`, `log.md`, and `revisions.md` sit beside it. The first three names are fixed; `revisions.md` is where frictions go.
 - `raw/` for sources and `wiki/` for pages, by default. A vault's schema may choose other locations.
 - Because the schema is named `AGENTS.md`, most agents read it as soon as they work in the repository, so the vault's conventions load even when this skill is not active.
 
@@ -60,11 +77,18 @@ Record the fields on `ingest`, `revise`, and on `query` when it files a page. Wh
 
 ## Revise this skill
 
-This skill is expected to keep changing; it was written before any real use. Watch for three failures during any operation: a decision it does not make, a rule that blocks useful work, and advice that is simply wrong.
+The skill was written before any real use, so expect it to be wrong. Watch for three failures: a decision it does not make, a rule that blocks useful work, and advice that is wrong for the case.
 
-1. Never invent procedure. When an operation needs a decision this skill does not make, or a rule must be broken to be useful, say so instead of improvising. Name the case: vault, commit, page.
-2. Choose the layer before proposing the change. If the fix would hold in any domain, it belongs in this skill. If it only holds here, it belongs in that vault's schema. Apply the genericity test in `docs/design.md`.
-3. Propose, do not impose. Give the case, what the skill says now, the change, and the strongest argument for leaving it alone. Do not edit this skill until the human agrees.
-4. Challenge the request as well as the rule. If an instruction conflicts with `docs/design.md`, say so before complying.
-5. Add a rule only when a case needed it. Remove one only for a hard constraint, the same bar as splitting a vault. Without this the skill erodes toward whatever was convenient last week.
-6. Keep the skill version in the compiler line of every entry, so vaults older than a change can be found and re-checked.
+Choose the layer before proposing anything. A fix that would hold in any domain belongs here; one that holds only in this vault belongs in that vault's schema. Apply the genericity test in `docs/design.md`.
+
+Record the friction in `revisions.md` at the vault root, creating the file if it is absent. One record, one block:
+
+    ## R-001 | open | 2026-11-09 | skill: log fields
+    - Case: <vault, commit, page>
+    - Skill says: <the rule, or the gap>
+    - Proposal: <the change>
+    - Against: <the strongest argument for leaving it alone>
+
+Close a record by appending a line, never by editing the block: `## R-001 | promoted | llm-driven@<commit>` or `## R-001 | rejected | <reason>`. Add a one-line `revise` entry to the log carrying the id.
+
+A record without a case is an opinion, and opinions stay in the conversation. Propose; do not impose. Do not edit this skill from a vault: vaults read it.

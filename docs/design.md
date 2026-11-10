@@ -114,6 +114,25 @@ The operating rules are in `SKILL.md` under Revise. Two properties matter:
 
 A proposal without a case is an opinion. Record it in the log, not in the skill.
 
+### Invariants and defaults
+
+A rule that any vault may change is not a rule, and a rule that no vault may change makes the skill unusable. The skill therefore splits its rules in two and names the split.
+
+- **Invariants** define the pattern. Break one and the result is no longer a vault.
+- **Everything else is a default.** The vault's schema wins, because the schema is the layer that knows the domain.
+
+This is what lets a project override a rule without negotiating. A vault that departs from a default writes the departure and its reason into its schema, and the disagreement ends there. A vault that needs to depart from an invariant has found a flaw in the pattern, which is a different problem: it is reported, not applied.
+
+The failure this prevents is silence. A default that is quietly ignored is indistinguishable from a mistake; a default written down as overridden is a decision.
+
+### How a vault reports back
+
+Friction is recorded in the vault, beside the work that produced it, in `revisions.md`: one record per friction, carrying the case, what the skill says, the proposal, and the strongest argument against it. The log gets a one-line `revise` entry holding the id.
+
+Records are append-only, and closing one appends a line instead of editing the block, for the same reason the log is append-only: the history of a disagreement is what explains the rule that came out of it.
+
+Both mechanisms are deliberately thin. A standard form is only worth having if it costs less than the informality it replaces.
+
 ## Boundaries
 
 | In | Out |

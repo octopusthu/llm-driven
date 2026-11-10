@@ -20,7 +20,7 @@ llm-driven/
 ├── AGENTS.md            # how to maintain this repository
 ├── README.md
 ├── assets/
-│   └── vault-template/  # AGENTS.md, index.md, log.md for a new vault
+│   └── vault-template/  # AGENTS.md, index.md, log.md, revisions.md for a new vault
 └── docs/
     └── design.md
 ```

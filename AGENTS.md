@@ -29,3 +29,10 @@ uvx --from "git+https://github.com/agentskills/agentskills#subdirectory=skills-r
 - Imperative mood in the body, third person in the description. No second person.
 - Keep `SKILL.md` short. Move detail into `references/` only when an operation genuinely needs it.
 - State a rule once. If two files need it, one owns it and the other points.
+
+## Changing the skill
+
+- Add a rule only when a case needed it. Remove one only for a hard constraint, the same bar as splitting a vault. Without this the skill erodes toward whatever was convenient last week.
+- A change usually starts as a `revisions.md` record in some vault. Quote its id in the commit, and name the rule that changed.
+- An invariant is the exception. Changing one changes what the pattern is: say so in the commit, and amend `docs/design.md` in the same commit.
+- Prefer deleting a rule to adding another. A skill that keeps growing stops being abstract.

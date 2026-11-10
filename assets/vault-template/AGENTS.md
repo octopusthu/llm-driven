@@ -22,6 +22,12 @@ One sentence: what this vault is for.
 
 Vaults or other stores this vault points to or ingests from. "None" if there are none.
 
+## Overrides
+
+Where this vault departs from a default in the skill. One line each: what the skill says, what this vault does instead, why.
+
+None.
+
 ## Conventions
 
 Page types, naming, language, and other rules, added as they emerge.

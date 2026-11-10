@@ -20,7 +20,9 @@ llm-driven/
 ├── AGENTS.md            # how to maintain this repository
 ├── README.md
 ├── assets/
-│   └── vault-template/  # AGENTS.md, index.md, log.md, revisions.md for a new vault
+│   └── vault-template/  # AGENTS.md, index.md, log.md, feedback.md for a new vault
+├── scripts/
+│   └── feedback.py      # collect open feedback kept in vaults
 └── docs/
     └── design.md
 ```

@@ -131,6 +131,10 @@ Friction is recorded in the vault, beside the work that produced it, in `revisio
 
 Records are append-only, and closing one appends a line instead of editing the block, for the same reason the log is append-only: the history of a disagreement is what explains the rule that came out of it.
 
+Only a friction that would change the skill belongs in the record. One that holds for a single vault is an override in that vault's schema and never travels. Without that valve the upstream loop drowns in local detail.
+
+Nothing reaches into a vault. The skill is a public repository; vaults may be private, on another machine, or on a network it cannot reach. Transport is therefore a person, and the only part worth automating is the report: `scripts/revisions.py` finds vaults by their files and prints the open records, so the decision costs one screen instead of a hunt.
+
 Both mechanisms are deliberately thin. A standard form is only worth having if it costs less than the informality it replaces.
 
 ## Boundaries

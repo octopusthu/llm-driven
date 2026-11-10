@@ -43,7 +43,6 @@ Everything else is a default: directory names, the log field order, the sections
 
 - `AGENTS.md` holds the schema; `index.md`, `log.md`, and `revisions.md` sit beside it. The first three names are fixed; `revisions.md` is where frictions go.
 - `raw/` for sources and `wiki/` for pages, by default. A vault's schema may choose other locations.
-- Because the schema is named `AGENTS.md`, most agents read it as soon as they work in the repository, so the vault's conventions load even when this skill is not active.
 
 Read `AGENTS.md` before every operation.
 
@@ -87,5 +86,9 @@ Record the friction in `revisions.md` at the vault root, creating the file if it
     - Against: <the strongest argument for leaving it alone>
 
 Close a record by appending a line, never by editing the block: `## R-001 | promoted | llm-driven@<commit>` or `## R-001 | rejected | <reason>`. Add a one-line `revise` entry to the log carrying the id.
+
+Only a friction that would change this skill belongs there. One that holds for this vault alone becomes an Override in its schema and does not travel.
+
+Nothing here reads a vault. This skill is a public repository; vaults may be private, remote, or unreachable from it. So a person carries the record, in a session that has this repository: run `scripts/revisions.py <root>...` over the directories that hold vaults, and it prints every open record. A change to this skill quotes the record's id, and the vault then appends its `promoted` line.
 
 A record without a case is an opinion, and opinions stay in the conversation. Propose; do not impose. Do not edit this skill from a vault: vaults read it.

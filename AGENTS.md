@@ -34,5 +34,6 @@ uvx --from "git+https://github.com/agentskills/agentskills#subdirectory=skills-r
 
 - Add a rule only when a case needed it. Remove one only for a hard constraint, the same bar as splitting a vault. Without this the skill erodes toward whatever was convenient last week.
 - A change usually starts as a `revisions.md` record in some vault. Quote its id in the commit, and name the rule that changed.
+- Before changing anything, collect the open records: `python3 scripts/revisions.py <root>...`. A change that answers none of them needs a reason.
 - An invariant is the exception. Changing one changes what the pattern is: say so in the commit, and amend `docs/design.md` in the same commit.
 - Prefer deleting a rule to adding another. A skill that keeps growing stops being abstract.

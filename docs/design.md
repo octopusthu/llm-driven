@@ -127,13 +127,15 @@ The failure this prevents is silence. A default that is quietly ignored is indis
 
 ### How a vault reports back
 
-Friction is recorded in the vault, beside the work that produced it, in `revisions.md`: one record per friction, carrying the case, what the skill says, the proposal, and the strongest argument against it. The log gets a one-line `revise` entry holding the id.
+Feedback is a concept. Its form belongs to the environment, and a skill meant for other people's repositories cannot assume one: this repository may have an issue tracker, or it may be a directory on someone's disk. So the design fixes the substance and only suggests the form.
 
-Records are append-only, and closing one appends a line instead of editing the block, for the same reason the log is append-only: the history of a disagreement is what explains the rule that came out of it.
+The substance is four things: the case, what the skill says now, the proposed change, and the strongest argument against it. Without a case the report is an opinion, and opinions are cheap enough to ignore.
 
-Only a friction that would change the skill belongs in the record. One that holds for a single vault is an override in that vault's schema and never travels. Without that valve the upstream loop drowns in local detail.
+Suggested forms, best first: an issue on this repository, a pull request that makes the change and argues for it, a note to the maintainer, and — with no channel at all — a local record in the vault, collected later by `scripts/revisions.py`.
 
-Nothing reaches into a vault. The skill is a public repository; vaults may be private, on another machine, or on a network it cannot reach. Transport is therefore a person, and the only part worth automating is the report: `scripts/revisions.py` finds vaults by their files and prints the open records, so the decision costs one screen instead of a hunt.
+Only a friction that would change the skill travels. One that holds for a single vault is an override in that vault's schema. Without that valve the upstream loop drowns in local detail.
+
+Appending the outcome rather than rewriting the report survives every form, for the same reason the log is append-only: the history of a disagreement is what explains the rule that came out of it.
 
 Both mechanisms are deliberately thin. A standard form is only worth having if it costs less than the informality it replaces.
 

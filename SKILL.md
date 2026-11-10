@@ -41,7 +41,7 @@ Everything else is a default: directory names, the log field order, the sections
 
 ## Vault layout
 
-- `AGENTS.md` holds the schema; `index.md`, `log.md`, and `revisions.md` sit beside it. The first three names are fixed; `revisions.md` is where frictions go.
+- `AGENTS.md` holds the schema; `index.md`, `log.md`, and `revisions.md` sit beside it. The first three names are fixed; `revisions.md` is where a report goes when there is no channel to the skill.
 - `raw/` for sources and `wiki/` for pages, by default. A vault's schema may choose other locations.
 
 Read `AGENTS.md` before every operation.
@@ -75,20 +75,10 @@ Append one entry to `log.md` per operation. One entry is one line:
 
 The skill was written before any real use, so expect it to be wrong. Watch for three failures: a decision it does not make, a rule that blocks useful work, and advice that is wrong for the case.
 
-Choose the layer before proposing anything. A fix that would hold in any domain belongs here; one that holds only in this vault belongs in that vault's schema. Apply the genericity test in `docs/design.md`.
+Choose the layer first. A fix that would hold in any domain belongs here; one that holds for this vault alone belongs in its schema, and does not travel.
 
-Record the friction in `revisions.md` at the vault root, creating the file if it is absent. One record, one block:
+Report it through whatever channel this repository offers. An issue is the natural one when it is reachable and the reporter has permission; a pull request works; so does telling the maintainer. Every report carries four things: the case named precisely (vault, commit, page), what the skill says now or the gap where it says nothing, the proposed change, and the strongest argument for leaving it alone. A report without a case is an opinion, and opinions stay in the conversation.
 
-    ## R-001 | open | 2026-11-09 | skill: log fields
-    - Case: <vault, commit, page>
-    - Skill says: <the rule, or the gap>
-    - Proposal: <the change>
-    - Against: <the strongest argument for leaving it alone>
+With no channel, record it in `revisions.md` at the vault root and carry it later: one block per report, starting `## R-001 | open | <date> | skill: <the rule>`, then those four lines. `scripts/revisions.py <root>...` collects the open ones. Either way, close a report by appending a line that names the outcome; never rewrite the original, because the history of a disagreement is what explains the rule that came out of it. A change to this skill quotes the report's id.
 
-Close a record by appending a line, never by editing the block: `## R-001 | promoted | llm-driven@<commit>` or `## R-001 | rejected | <reason>`. Add a one-line `revise` entry to the log carrying the id.
-
-Only a friction that would change this skill belongs there. One that holds for this vault alone becomes an Override in its schema and does not travel.
-
-Nothing here reads a vault. This skill is a public repository; vaults may be private, remote, or unreachable from it. So a person carries the record, in a session that has this repository: run `scripts/revisions.py <root>...` over the directories that hold vaults, and it prints every open record. A change to this skill quotes the record's id, and the vault then appends its `promoted` line.
-
-A record without a case is an opinion, and opinions stay in the conversation. Propose; do not impose. Do not edit this skill from a vault: vaults read it.
+Propose; do not impose. Do not edit this skill from a vault: vaults read it.

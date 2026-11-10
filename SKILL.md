@@ -55,16 +55,13 @@ Append one entry to `log.md` per operation. One entry is one line:
 
 - The bracket holds the recorded time: when the operation ran, in ISO 8601 with a colon in the offset. Take it from the system clock with `date -Iminutes`. Never estimate it.
 - The operation is one of `setup`, `ingest`, `query`, `lint`, `revise`.
-- The title comes next, then six fields in a fixed order: skill and commit, agent and version, account, model, reasoning effort, context. Fixed positions mean the line needs no keys and stays parseable: `awk -F' \\| '`.
-
-Record the fields on `ingest`, `revise`, and on `query` when it files a page. Which agent, under which account, on which model, at what effort, with how much context decides whether a page can be trusted, and makes a failure reproducible.
+- The title comes next, then six fields in a fixed order: skill and commit, agent and version, account, model, reasoning effort, context. Fixed positions mean the line needs no keys and stays parseable: `awk -F' \\| '`. Required on `ingest`, `revise`, and on `query` when it files a page: they decide whether a page can be trusted, and they make a failure reproducible.
 
 1. Read the values from the runtime, not from the model's description of itself. A model's account of its own identity is not evidence.
 2. Runtimes expose different amounts of this. Write what you have and `unknown` for the rest. Never infer a value, and never drop a position.
-3. Keep the line short. Write context as `200k/38k` for window and used, and cut long values to what identifies them.
-4. A title or value may not contain `|`. Replace it.
-5. The account can identify a person. Record it only if the vault's schema allows it for that vault's storage; otherwise record the role, for example `owner`. Never record credentials, tokens, or anything that grants access.
-6. Entries written before this rule carry no fields. Do not add them retroactively.
+3. Keep the line short: context as `200k/38k` for window and used, long values cut to what identifies them, and no `|` in a title or a value.
+4. The account can identify a person. Record it only if the vault's schema allows it for that vault's storage; otherwise record the role, for example `owner`. Never record credentials, tokens, or anything that grants access.
+5. Entries written before this rule carry no fields. Do not add them retroactively.
 
 ## Set up a vault
 

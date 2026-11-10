@@ -20,7 +20,7 @@ The human curates sources, asks questions, and judges what matters. The agent wr
 - **Divide** knowledge: decide whether material belongs in an existing vault or a new one.
 - **Revise** this skill: report where it does not fit, and propose a change.
 
-Only Set up and Revise have detailed instructions so far.
+Only Set up, Adopt, Ingest, and Revise have detailed instructions so far.
 
 ## Invariants and defaults
 
@@ -50,11 +50,11 @@ Read `AGENTS.md` before every operation.
 
 Append one entry to `log.md` per operation. One entry is one line:
 
-    ## [2026-11-09T18:20+08:00] ingest | Title of the source | llm-driven@1fb4987 | agent | owner | model | effort | ctx
+    ## [2026-11-09T18:20+08:00] ingest | Title of the source | 2026-09-14 | llm-driven@1fb4987 | agent | owner | model | effort | ctx
 
 - The bracket holds the recorded time: when the operation ran, in ISO 8601 with a colon in the offset. Take it from the system clock with `date -Iminutes`. Never estimate it.
 - The operation is one of `setup`, `ingest`, `query`, `lint`, `revise`. `revise` changes this vault, such as an override or a schema edit; it is not how feedback travels.
-- The title comes next, then six fields in a fixed order: skill and commit, agent and version, account, model, reasoning effort, context. Fixed positions mean the line needs no keys and stays parseable: `awk -F' \\| '`. Required on `ingest`, `revise`, and on `query` when it files a page: they decide whether a page can be trusted, and they make a failure reproducible.
+- The title comes next, then the event time, then six compiler fields: skill and commit, agent and version, account, model, reasoning effort, context. The event time is when the content happened. Write `-` for an operation that has none, such as `setup` or `lint`, and never substitute the recorded time. Fixed positions mean the line needs no keys and stays parseable: `awk -F' \\| '`. Required on `ingest`, `revise`, and on `query` when it files a page: they decide whether a page can be trusted, and they make a failure reproducible.
 
 1. Read the values from the runtime, not from the model's description of itself. A model's account of its own identity is not evidence.
 2. Runtimes expose different amounts of this. Write what you have and `unknown` for the rest. Never infer a value, and never drop a position.
@@ -67,7 +67,7 @@ Append one entry to `log.md` per operation. One entry is one line:
 1. Confirm the target directory. If it already holds content, use Adopt instead.
 2. Create the directory and run `git init`.
 3. Copy the files in `assets/vault-template/` to the vault root. Do not create `raw/` or `wiki/`; the first ingest creates them.
-4. Fill in `AGENTS.md` with the user. Ask only for what is not already known. Write "Not decided." for anything the user has not decided; never invent it. Keep the template's headings and write the content in the vault's language.
+4. Fill in `AGENTS.md` with the user. Ask only for what is not already known. Write "Not decided." for anything the user has not decided; never invent it. Keep the template's headings and write the content in the vault's language. The vault starts at `Status: empty`; only the user raises it.
 5. Append a `setup` entry to `log.md`, with the fields. The first field carries the skill version: the commit of this skill's repository.
 6. Commit. Do not add a remote or push unless `AGENTS.md` allows it.
 
@@ -75,9 +75,19 @@ Append one entry to `log.md` per operation. One entry is one line:
 
 1. Read it before writing. Conventions it already has win; where one conflicts with this skill, record it in `AGENTS.md` under Overrides rather than resolving it silently.
 2. Add the three files where they are missing. The first commit only adds; moving or rewriting what is already there waits until the human has seen the result.
-3. Fill `AGENTS.md` from what the repository already does, not from what it ought to do. Write "Not decided." where it has no answer.
+3. Fill `AGENTS.md` from what the repository already does, not from what it ought to do. Write "Not decided." where it has no answer. It keeps `Status: empty` until `Pages` and `Sources` are answered.
 4. Record the remote under Readers and storage, with whether pushing is allowed. With no remote, say so.
 5. Append a `setup` entry that names the repository as adopted, then commit. Push only if step 4 allows it, and when you do, say what went to the remote.
+
+## Ingest a source
+
+1. Read `Status` in `AGENTS.md`. If it is not `ingest-ready`, stop and say what is missing: page types, or a source with its key and event-time field. Do not invent either to get past the check.
+2. Copy the source into `raw/` as the schema prescribes. Write it once and never edit it; a correction is a new file that names the one it corrects.
+3. Take the event time from the content, not from the clock. A source covering a range records the range; a source whose date cannot be established records unknown.
+4. Decide what the source changes before writing: which pages it touches, which claims it supports, and which existing claims it contradicts. One source often touches many pages. A contradiction is recorded beside the old claim, not in place of it.
+5. Write or update those pages, and add the source to the page so any claim can be traced back to it.
+6. Update `index.md` for every page created and every source added.
+7. Append one line to `log.md`: recorded time, `ingest`, title, event time, then the six compiler fields.
 
 ## Revise this skill
 

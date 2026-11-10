@@ -43,7 +43,7 @@ This is bitemporal modeling: actual time and record time in Martin Fowler's term
 
 Every entry also records which agent, under which account, on which model, at what effort, with how much context wrote it. The original assumes one agent and one model; once a vault outlives a model version, or more than one agent writes into it, a page without this record cannot be judged or reproduced.
 
-It goes on the entry line, not in a block under it. The log is append-only and read often, so a per-entry block multiplies an already growing file; six fields in a fixed order cost one long line and stay parseable.
+It goes on the entry line, not in a block under it. The log is append-only and read often, so a per-entry block multiplies an already growing file; seven fields in a fixed order cost one long line and stay parseable. The event time sits first among them, next to the recorded time, because the two axes are what the line exists to answer.
 
 Two constraints follow from the same discipline as event time:
 

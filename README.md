@@ -2,7 +2,7 @@
 
 An agent skill for Andrej Karpathy's [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern. The agent compiles your sources into a persistent, interlinked markdown wiki and keeps it current.
 
-**Status:** early. `SKILL.md` covers setting up a vault and revising the skill; ingest, query, lint, and divide are outlined only. See [docs/design.md](docs/design.md) for goals and boundaries.
+**Status:** early. `SKILL.md` covers setting up or adopting a vault, ingesting a source, and revising the skill; query, lint, and divide are outlined only. See [docs/design.md](docs/design.md) for goals and boundaries.
 
 ## What this adds to the original
 

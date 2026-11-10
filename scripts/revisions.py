@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Collect open frictions from every vault under the given roots.
 
-A vault is a directory holding AGENTS.md, index.md and log.md. Frictions live in
+A vault is a git repository holding AGENTS.md, index.md and log.md. Frictions live in
 its revisions.md, one block per record. A record is closed by appending a line
 with the same id, so the last line for an id wins.
 
@@ -20,7 +20,8 @@ VAULT_FILES = ("AGENTS.md", "index.md", "log.md")
 
 
 def is_vault(path):
-    return all((path / name).is_file() for name in VAULT_FILES)
+    """A vault is one git repository with the three fixed files at its root."""
+    return all((path / name).is_file() for name in VAULT_FILES) and (path / ".git").exists()
 
 
 def read_records(revisions):

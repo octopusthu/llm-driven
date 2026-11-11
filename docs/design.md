@@ -50,6 +50,17 @@ Two constraints follow from the same discipline as event time:
 - **The runtime is the only source.** Model self-identification is unreliable, so a value the runtime does not report stays `unknown`. Guessing is worse than a gap, because a gap is visible.
 - **The account is personal data.** It is recorded only where the vault's storage allows it. Otherwise the role is recorded instead.
 
+### Where the two times go
+
+A layout with a single slot for time forces a choice, and either choice loses something. Keyed by fetch time, a back-filled month becomes unfindable in the directory tree. Keyed by event time, a file no longer ties to the fetch that produced it.
+
+So each place carries the time it is asked for:
+
+- **The log line** carries both, because it is the index.
+- **The raw directory** follows the event time, so the material for a month sits under that month however late it arrived.
+- **The raw filename** carries the fetch time, which ties the file to the log entry that created it.
+- **The page frontmatter** carries the event range, which is what a query filters on.
+
 ## Vault
 
 The term comes from Obsidian. The original only says the wiki is "a git repo of markdown files".

@@ -26,6 +26,7 @@ uvx --from "git+https://github.com/agentskills/agentskills#subdirectory=skills-r
 
 ## Writing
 
+- Write in English. A translation is a second copy of a rule, and second copies diverge.
 - Imperative mood in the body, third person in the description. No second person.
 - Keep `SKILL.md` short. Move detail into `references/` only when an operation genuinely needs it.
 - State a rule once. If two files need it, one owns it and the other points.

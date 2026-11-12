@@ -44,10 +44,11 @@ None yet.
 
 ## Raw layout
 
-- `raw/<source>/<event YYYY-MM>/<fetch YYYY-MM-DDTHHMM>-<slug>.<ext>`, one file per fetch.
-- The directory follows the event time, so a month's material sits under that month however late it arrived.
-- The filename carries the fetch time, which is what ties the file to the log entry that created it.
-- A fetch spanning several months splits, one file per month.
+- `raw/<source>/<YYYY-MM>/<event>_<fetch>-<slug>.<ext>`, one file per fetch.
+- `<YYYY-MM>` is the month the event starts in, so material that arrived late still sits under the month it belongs to.
+- `<event>` is when the content happened, at the precision the source allows: `YYYY-MM-DD`, `YYYY-MM`, `YYYY`, or `unknown`. `<fetch>` is the ingest time, `YYYY-MM-DDTHHMM`.
+- The event comes first, so a directory reads in the order things happened; the fetch time follows it and ties the file to the log entry that created it.
+- A source spanning several months stays one file, under the month it starts in.
 - Written once, never edited. A correction is a new file that names the one it corrects.
 
 ## Naming

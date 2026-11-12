@@ -54,11 +54,11 @@ Two constraints follow from the same discipline as event time:
 
 A layout with a single slot for time forces a choice, and either choice loses something. Keyed by fetch time, a back-filled month becomes unfindable in the directory tree. Keyed by event time, a file no longer ties to the fetch that produced it.
 
-So each place carries the time it is asked for:
+The event is the more important of the two: a directory is read to learn what happened when, not when the vault got around to recording it. So the event leads wherever a place holds one time, and the fetch time sits beside it wherever a place holds both.
 
 - **The log line** carries both, because it is the index.
-- **The raw directory** follows the event time, so the material for a month sits under that month however late it arrived.
-- **The raw filename** carries the fetch time, which ties the file to the log entry that created it.
+- **The raw directory** is the month the event starts in, so material that arrived late still sits under the month it belongs to. A source spanning several months is not split; it stays under the month it starts in. A split would turn one source into files that no longer name one another, and would date each piece by a month that only the range explains.
+- **The raw filename** leads with the event date and follows with the fetch time. The event orders a directory by when things happened; the fetch time ties the file to the log entry that created it. Event dates come at mixed precision, and a directory holds few enough files for that mixing to cost less than the ordering gains.
 - **The page frontmatter** carries the event range, which is what a query filters on.
 
 ## Vault

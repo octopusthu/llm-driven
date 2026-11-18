@@ -1,6 +1,6 @@
 # Schema
 
-Inspired and guided by llm-driven@<commit> — https://github.com/octopusthu/llm-driven
+Inspired and guided by llm-driven — https://github.com/octopusthu/llm-driven
 
 This file is the vault's schema. It is named `AGENTS.md` so that agents working in this repository read it automatically.
 

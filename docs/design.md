@@ -65,11 +65,11 @@ The event is the more important of the two: a directory is read to learn what ha
 
 The log answers "which compiler wrote this page", but only for a reader who parses history. A vault also states it once, at the top of `AGENTS.md`, where a reader meets the repository before its log:
 
-    Inspired and guided by llm-driven@<commit> — https://github.com/octopusthu/llm-driven
+    Inspired and guided by llm-driven — https://github.com/octopusthu/llm-driven
 
 This is the reverse pointer. The skill's repository does not list the vaults it produced: such a list goes stale the moment a vault is copied, renamed, or deleted, and it says nothing to a reader who arrived from the vault. A line inside the vault travels with it.
 
-The commit is the one the `setup` entry records. It is fixed at setup rather than updated, because what a reader needs is the version that shaped the vault; the log already records, per operation, which version last touched it. A vault set up before this rule is given the line at its next `revise`, with `unknown` for the commit if it cannot be recovered.
+The line names the repository, not a commit. A vault follows the skill as it stands, so a commit pinned at setup would point at a version nobody runs; the log already records the exact commit for every operation that needs one. A vault set up before this rule is given the line at its next `revise`.
 
 ## Vault
 

@@ -61,6 +61,16 @@ The event is the more important of the two: a directory is read to learn what ha
 - **The raw filename** leads with the event date and follows with the fetch time. The event orders a directory by when things happened; the fetch time ties the file to the log entry that created it. Event dates come at mixed precision, and a directory holds few enough files for that mixing to cost less than the ordering gains.
 - **The page frontmatter** carries the event range, which is what a query filters on.
 
+### The vault's own provenance
+
+The log answers "which compiler wrote this page", but only for a reader who parses history. A vault also states it once, at the top of `AGENTS.md`, where a reader meets the repository before its log:
+
+    Inspired and guided by llm-driven@<commit> — https://github.com/octopusthu/llm-driven
+
+This is the reverse pointer. The skill's repository does not list the vaults it produced: such a list goes stale the moment a vault is copied, renamed, or deleted, and it says nothing to a reader who arrived from the vault. A line inside the vault travels with it.
+
+The commit is the one the `setup` entry records. It is fixed at setup rather than updated, because what a reader needs is the version that shaped the vault; the log already records, per operation, which version last touched it. A vault set up before this rule is given the line at its next `revise`, with `unknown` for the commit if it cannot be recovered.
+
 ## Vault
 
 The term comes from Obsidian. The original only says the wiki is "a git repo of markdown files".

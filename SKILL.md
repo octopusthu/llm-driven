@@ -32,6 +32,7 @@ Invariants define the pattern. A vault that breaks one is no longer an llm-drive
 - `AGENTS.md`, `index.md`, and `log.md` sit at the vault root, under those names.
 - A pointer copies nothing and is not maintained by the vault.
 - Provenance comes from the runtime, never from the model's account of itself.
+- A vault records, on one line in `AGENTS.md`, the skill that guides it.
 
 Everything else is a default: directory names, the log field order, the sections of `index.md`, page types, language, and when a human must review.
 
@@ -67,7 +68,7 @@ Append one entry to `log.md` per operation. One entry is one line:
 1. Confirm the target directory. If it already holds content, use Adopt instead.
 2. Create the directory and run `git init`.
 3. Copy the files in `assets/vault-template/` to the vault root. Do not create `raw/` or `wiki/`; the first ingest creates them.
-4. Fill in `AGENTS.md` with the user. Ask only for what is not already known. Write "Not decided." for anything the user has not decided; never invent it. Keep the template's headings and write the content in the vault's language. The vault starts at `Status: empty`; only the user raises it.
+4. Fill in `AGENTS.md` with the user. Ask only for what is not already known. Write "Not decided." for anything the user has not decided; never invent it. Keep the template's headings and write the content in the vault's language. Keep the `Inspired and guided by` line as written. The vault starts at `Status: empty`; only the user raises it.
 5. Append a `setup` entry to `log.md`, with the fields. The first field carries the skill version: the commit of this skill's repository.
 6. Commit. Do not add a remote or push unless `AGENTS.md` allows it.
 
@@ -75,7 +76,7 @@ Append one entry to `log.md` per operation. One entry is one line:
 
 1. Read it before writing. Conventions it already has win; where one conflicts with this skill, record it in `AGENTS.md` under Overrides rather than resolving it silently.
 2. Add the three files where they are missing. The first commit only adds; moving or rewriting what is already there waits until the human has seen the result.
-3. Fill `AGENTS.md` from what the repository already does, not from what it ought to do. Write "Not decided." where it has no answer. It keeps `Status: empty` until `Pages` and `Sources` are answered.
+3. Fill `AGENTS.md` from what the repository already does, not from what it ought to do. Write "Not decided." where it has no answer. Keep the `Inspired and guided by` line as written. It keeps `Status: empty` until `Pages` and `Sources` are answered.
 4. Record the remote under Readers and storage, with whether pushing is allowed. With no remote, say so.
 5. Append a `setup` entry that names the repository as adopted, then commit. Push only if step 4 allows it, and when you do, say what went to the remote.
 
